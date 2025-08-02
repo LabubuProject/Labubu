@@ -36,3 +36,5 @@ userController.verifyUser = async (req, res, next) => {
     return next(err);
   }
 };
+
+export default userController;
