@@ -8,7 +8,7 @@ const userSchema = new Schema({
   highestLevel: { type: Number },
 });
 
-const saltRounds = 10;
+const saltRounds = 5;
 
 userSchema.pre('save', async function (next) {
   try {
