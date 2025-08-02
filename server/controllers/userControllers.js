@@ -37,4 +37,4 @@ userController.verifyUser = async (req, res, next) => {
   }
 };
 
-export default userController;
+export default userController
