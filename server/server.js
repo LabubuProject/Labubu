@@ -1,9 +1,7 @@
 import express from 'express';
 import path from 'path';
-import dotenv from 'dotenv';
 // import userRouter from './routes/users.js';
-
-dotenv.config();
+import { connectDB } from './config/db.js';
 const app = express();
 const PORT = 3000;
 
@@ -34,6 +32,6 @@ app.use((err, _req, res, _next) => {
 });
 
 app.listen(PORT, () => {
-//   connectDB();
+  connectDB();
   console.log(`🚀 express server listening on port ${PORT}`);
 });
