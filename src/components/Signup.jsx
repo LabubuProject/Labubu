@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useAuth } from '../AuthContext/AuthContext';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../AuthContext/AuthContext';
 
 export default function Signup() {
-  const { signup } = useAuth();
+  const { signup } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
