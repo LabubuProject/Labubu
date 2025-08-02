@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-// import userRouter from './routes/users.js';
+import userRouter from './routes/users.js';
 import { connectDB } from './config/db.js';
 const app = express();
 const PORT = 3000;
@@ -18,7 +18,7 @@ app.get('/', (_req, res) => {
   );
 });
 
-// app.use('/api/user', userRouter);
+app.use('/api/user', userRouter);
 
 /* 404 handler - TO-DO: Create custom page */
 app.use('*catchall', (_req, res) => {
