@@ -26,4 +26,24 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  // Override for server files to enable node globally and make sure backend not in a browser environment 
+  {
+    files: ['server/**/*.js', 'db.js'],
+    extends: [js.configs.recommended],
+    env: {
+      node: true,
+      es2021: true
+    },
+    languageOptions: {
+      ecmaVersion: 'latest',
+      globals: globals.node,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+    },
+    rules: {
+      'no-console': 'off'
+    }
+  }
 ])
