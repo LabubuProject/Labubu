@@ -6,7 +6,7 @@ const tokenController = {};
 tokenController.verifyUserToken = async (req, res, next) => {
   let token;
   if (
-    req.headers.authorization.startsWith('Labubu') &&
+    req.headers.authorization.startsWith('Bearer') &&
     req.headers.authorization
   ) {
     try {
