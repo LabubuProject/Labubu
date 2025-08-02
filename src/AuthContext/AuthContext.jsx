@@ -2,7 +2,7 @@ import { useState, useContext, createContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export function AuthProvider({ element }) {
   const [token, setToken] = useState(() => localStorage.getItem('token'));
@@ -33,7 +33,7 @@ export function AuthProvider({ element }) {
     });
     setToken(data.token);
     setUser(data.user);
-    useNavigate('/api/user/Board');
+    // useNavigate('/api/user/Board');
   };
 
   const login = async (username, password) => {
@@ -56,5 +56,3 @@ export function AuthProvider({ element }) {
     </AuthContext.Provider>
   );
 }
-
-export const useAuth = () => useContext(AuthContext);
