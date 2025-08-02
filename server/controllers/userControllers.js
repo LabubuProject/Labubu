@@ -1,4 +1,4 @@
-import User from '../model/userModel.js'
+import User from '../model/userModel.js';
 
 const userController = {};
 
@@ -35,3 +35,4 @@ userController.verifyUser = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
+};
