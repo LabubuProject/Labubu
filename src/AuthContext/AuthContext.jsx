@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const AuthContext = createContext();
 
-export function AuthProvider({ element }) {
+export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [user, setUser] = useState(null);
 
@@ -42,17 +42,17 @@ export function AuthProvider({ element }) {
       password,
     });
     setToken(data.token);
-    useNavigate('/api/user/Board');
+    // useNavigate('/api/user/Board');
   };
 
   const logout = () => {
     setToken(null);
-    useNavigate('/api/user/login');
+    // useNavigate('/api/user/login');
   };
 
   return (
     <AuthContext.Provider value={{ user, token, signup, login, logout }}>
-      {element}
+      {children}
     </AuthContext.Provider>
   );
 }
