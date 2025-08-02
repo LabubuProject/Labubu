@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { useAuth } from '../AuthContext/AuthContext';
 
-export default function Login() {
-  const { login } = useAuth();
+export default function Signup() {
+  const { signup } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const submit = async e => {
     e.preventDefault();
     try {
-      await login(username, password);
+      await signup(username, password);
     } catch (err) {
-      alert('Login failed');
+      alert('Signup failed');
     }
   };
 
   return (
     <form onSubmit={submit}>
-      <h2>Log In</h2>
+      <h2>Sign Up</h2>
       <label>Username
         <input
           type="text"
@@ -34,8 +34,7 @@ export default function Login() {
           required
         />
       </label>
-      <button type="submit">Log In</button>
-      <p>Don't have an account? <a href="/signup">Sign up</a></p>
+      <button type="submit">Sign Up</button>
     </form>
   );
 }
