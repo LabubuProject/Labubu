@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       axios
-        .get('/api/myProfile')
+        .get('/api/user/myProfile')
         .then((res) => setUser(res.data.profile))
         .catch(() => {
           setToken(null);
@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
     });
     setToken(data.token);
     setUser(data.user);
-    // useNavigate('/api/user/Board');
+    //useNavigate('/api/user/Board');
   };
 
   const login = async (username, password) => {
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
       password,
     });
     setToken(data.token);
-    // useNavigate('/api/user/Board');
+    //useNavigate('/api/user/Board');
   };
 
   const logout = () => {
