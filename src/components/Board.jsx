@@ -28,7 +28,7 @@ const Board = () => {
   useEffect(() => {
     if (gameStarted && matchedCards.length === gridSize * 2) {
       setGameWon(true);
-      //TO-DO: create http post request to users db with total flips and timer(placeholder)
+      //TO-DO: create http PUT request to users db with total flips and timer(placeholder)
     }
   }, [matchedCards, gridSize, gameStarted, gameWon]);
 
