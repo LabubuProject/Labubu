@@ -1,1 +1,17 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-ebony: #3e443e;
+}
+
+p {
+  @apply text-ebony;
+}
+
+button {
+  @apply text-ebony;
+}
+
+body {
+  @apply bg-[url('./assets/background.png')] bg-cover bg-center;
+}
