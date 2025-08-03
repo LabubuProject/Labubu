@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Stats from './Stats';
 import Card from './Card';
+import Header from './Header';
 
 const Board = () => {
-  const [gridSize, _setGridSize] = useState(3); //creating in anticipation of game levels
+  const [gridSize, _setGridSize] = useState(6); //creating in anticipation of game levels
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -68,29 +68,30 @@ const Board = () => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center mt-10'>
+    <div className='min-h-screen flex flex-col items-center justify-center'>
+      <Header flips={numOfFlips} gameWon={gameWon} gameStarted={gameStarted} />
       {gameStarted && (
-        <div className='flex flex-col items-center justify-center mt-10'>
-          <Stats flips={numOfFlips} gameWon={gameWon} />
-          <div className='grid grid-cols-3 gap-2'>
-            {board.map((value, index) => (
-              <Card
-                key={index}
-                index={index}
-                value={value.number}
-                selectedCards={selectedCards}
-                matchedCards={matchedCards}
-                onClick={() => handleFlipCard(index, value)}
-                /* when we add parameters to the handleFlipCard function, it will be immediately 
-                invoked when a card component renders. To avoid this, we pass the arrow function as
-                the function reference to the onclick handler, now the function will only run on click */
-              />
-            ))}
-          </div>
+        <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1 mb-6 overflow-hidden'>
+          {board.map((value, index) => (
+            <Card
+              key={index}
+              index={index}
+              value={value.number}
+              selectedCards={selectedCards}
+              matchedCards={matchedCards}
+              onClick={() => handleFlipCard(index, value)}
+              /* when we add parameters to the handleFlipCard function, it will be immediately 
+                  invoked when a card component renders. To avoid this, we pass the arrow function as
+                  the function reference to the onclick handler, now the function will only run on click */
+            />
+          ))}
         </div>
       )}
       {!gameStarted && (
-        <button className='rounded-lg bg-green w-30 h-10' onClick={startGame}>
+        <button
+          className='w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]'
+          onClick={startGame}
+        >
           StartGame
         </button>
       )}
