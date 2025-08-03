@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run server",
     "server": "node --watch server/server.js",
-    "client": "vite",
+    "client": "vite --host",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "vite build",
     "lint": "eslint .",
