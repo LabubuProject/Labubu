@@ -8,14 +8,11 @@ import { AuthProvider } from './AuthContext/AuthContext.jsx';
 function App() {
   return (
     <AuthProvider>
-      <Header />
-      {/* <Login /> */}
-      {/* <Signup /> */}
-      {/* <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes> */}
-      <Board />
+      <Routes>
+        <Route path='/' element={<Board />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+      </Routes>
     </AuthProvider>
   );
 }
