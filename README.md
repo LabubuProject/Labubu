@@ -1,6 +1,6 @@
 # Labubu
 
-![labubu_iphone](./src/assets/iphone_mockup.png)
+![labubu_iphone](./src/assets/iphone_mockup_sm.png)
 
 ## User Story
 
