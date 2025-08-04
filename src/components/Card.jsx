@@ -22,7 +22,6 @@ const Card = ({
         <div
           className={`card-back rounded-lg shadow-lg flex items-center justify-center bg-white text-3xl cardImage${letter}`}
         >
-          {value}
         </div>
       </div>
     </div>
