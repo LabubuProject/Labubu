@@ -64,3 +64,8 @@ body {
 .card-back {
   transform: rotateY(180deg);
 }
+
+.board.paused {
+  opacity: 0.5;
+  pointer-events: none;
+}

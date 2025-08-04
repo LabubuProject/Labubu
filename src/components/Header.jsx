@@ -1,7 +1,7 @@
 import React from 'react';
 import Stats from './Stats.jsx';
 
-const Header = ({ flips, gameWon, gameStarted }) => {
+const Header = ({ flips, gameWon, gameStarted, paused}) => {
   //hamburger menu?
   return (
     <div className='flex flex-col items-center justify-center mt-10'>
@@ -9,7 +9,7 @@ const Header = ({ flips, gameWon, gameStarted }) => {
         Labu Who?
       </h1>
       {gameStarted && (
-        <Stats flips={flips} gameWon={gameWon}/>
+        <Stats flips={flips} gameWon={gameWon} paused={paused}  />
       )}
     </div>
   );
