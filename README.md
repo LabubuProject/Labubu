@@ -128,7 +128,12 @@ const startGame = (e) => {
   - add dark-mode styling
   - add back-of-card textured image
 - Feature
+  - add dropdown to choose board grid size
   - create a 404 page
   - create leaderboard page
   - add background music with volume controls
   - create the option for a two-player game
+
+## Resources
+
+- [Vite Dev Config](https://vite.dev/config/)
