@@ -12,8 +12,17 @@ router.post(
   '/signup',
   userController.createUser,
   tokenController.generateToken,
-  (req, res) => {
+  (_req, res) => {
     res.status(200).send({ token: res.locals.token, user: res.locals.user });
+  }
+);
+
+router.put(
+  '/updateuser',
+  tokenController.protect,
+  userController.updateUser,
+  (_req, res) => {
+    res.status(200).send({ stats: res.locals.user });
   }
 );
 
@@ -21,7 +30,7 @@ router.post(
   '/login',
   userController.verifyUser,
   tokenController.generateToken,
-  (req, res) => {
+  (_req, res) => {
     res.status(200).send({ token: res.locals.token, user: res.locals.user });
   }
 );

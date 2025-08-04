@@ -13,6 +13,36 @@ userController.createUser = async (req, res, next) => {
   }
 };
 
+userController.updateUser = async (req, res, next) => {
+  const { username, bestTime, highestLevel } = req.body;
+  const userInfo = req.body;
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      console.log('no user');
+      throw new Error('User does not exist');
+    }
+
+    await User.findOneAndUpdate(
+      { username },
+      {
+        $set: userInfo,
+      }
+    );
+
+    user.username = user.username;
+    user.password = user.password;
+    user.bestTime = bestTime || user.bestTime;
+    user.highestLevel = highestLevel || user.highestLevel;
+
+    const updatedUser = await user.save();
+
+    res.locals.user = updatedUser;
+    next();
+  } catch {}
+};
+
 userController.verifyUser = async (req, res, next) => {
   // write code here
   const { username, password } = req.body;
