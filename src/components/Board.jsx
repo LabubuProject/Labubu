@@ -11,7 +11,6 @@ const Board = () => {
   const [numOfFlips, setNumOfFlips] = useState(0);
   const [gameWon, setGameWon] = useState(false);
 
-  console.log(board);
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
     if (
@@ -29,9 +28,8 @@ const Board = () => {
   useEffect(() => {
     if (gameStarted && matchedCards.length === gridSize * 2) {
       setGameWon(true);
-      //TO-DO: create http PUT request to users db with total flips and timer(placeholder)
     }
-  }, [matchedCards, gridSize, gameStarted, gameWon]);
+  }, [matchedCards, gridSize, gameStarted]);
 
   const startGame = (e) => {
     e.preventDefault();
