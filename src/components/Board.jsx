@@ -3,27 +3,32 @@ import Card from './Card';
 import Header from './Header';
 
 const Board = () => {
-  const [gridSize, _setGridSize] = useState(6); //creating in anticipation of game levels
+  const [gridSize, _setGridSize] = useState(8); //creating in anticipation of game levels
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
   const [numOfFlips, setNumOfFlips] = useState(0);
   const [gameWon, setGameWon] = useState(false);
-  const imgArr = ['A', 'B', 'C', 'D'];
   const [dim, setDim] = useState();
+  const [paused, setPaused] = useState(false);
+  const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-  console.log(board);
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
-    if (
-      selectedCards.length === 2 &&
-      selectedCards[0].letter === selectedCards[1].letter
-    ) {
-      setMatchedCards((prevMatchedCards) => [
-        ...prevMatchedCards,
-        ...selectedCards,
-      ]);
+    if (selectedCards.length === 2) {
+      if (selectedCards[0].letter === selectedCards[1].letter) {
+        setMatchedCards((prevMatchedCards) => [
+          ...prevMatchedCards,
+          ...selectedCards,
+        ]);
+        setSelectedCards([]);
+      } else {
+        const timeoutId = setTimeout(() => {
+          setSelectedCards([]);
+        }, 800);
+        return () => clearTimeout(timeoutId);
+      }
     }
   }, [selectedCards]);
 
@@ -33,9 +38,8 @@ const Board = () => {
     if (gameStarted && matchedCards.length === gridSize * 2) {
       console.log('win');
       setGameWon(true);
-      //TO-DO: create http PUT request to users db with total flips and timer(placeholder)
     }
-  }, [matchedCards, gridSize, gameStarted, gameWon]);
+  }, [matchedCards, gridSize, gameStarted]);
 
   const startGame = (e) => {
     e.preventDefault();
@@ -65,6 +69,7 @@ const Board = () => {
   };
 
   const handleFlipCard = (index, value) => {
+    if (paused) return;
     setNumOfFlips(numOfFlips + 1);
     //check if card at index is already in array
     const currCard = selectedCards.find((card) => card.index === index);
@@ -93,7 +98,12 @@ const Board = () => {
 
   return (
     <div className='min-h-screen flex flex-col items-center justify-center'>
-      <Header flips={numOfFlips} gameWon={gameWon} gameStarted={gameStarted} />
+      <Header
+        flips={numOfFlips}
+        gameWon={gameWon}
+        gameStarted={gameStarted}
+        paused={paused}
+      />
       {gameStarted && (
         <div
           className='grid gap-4 justify-center'

@@ -5,7 +5,7 @@ import tokenController from '../controllers/tokenControllers.js';
 const router = express.Router();
 
 router.get('/myProfile', tokenController.verifyUserToken, (req, res) => {
-  res.status(200).json(req.user);
+  res.status(200).json({ profile: req.user });
 });
 
 router.post(

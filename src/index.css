@@ -9,7 +9,7 @@ p {
 }
 
 button {
-  @apply text-ebony;
+  @apply text-white;
 }
 
 body {
@@ -30,6 +30,22 @@ body {
 
 .cardImageD {
   @apply bg-[url('./assets/labubuD.png')] bg-contain bg-center bg-no-repeat;
+}
+
+.cardImageE {
+  @apply bg-[url('./assets/labubuE.png')] bg-contain bg-center bg-no-repeat;
+}
+
+.cardImageF {
+  @apply bg-[url('./assets/labubuF.png')] bg-contain bg-center bg-no-repeat;
+}
+
+.cardImageG {
+  @apply bg-[url('./assets/labubuG.png')] bg-contain bg-center bg-no-repeat;
+}
+
+.cardImageH {
+  @apply bg-[url('./assets/labubuH.png')] bg-contain bg-center bg-no-repeat;
 }
 
 .card {
@@ -63,4 +79,9 @@ body {
 
 .card-back {
   transform: rotateY(180deg);
+}
+
+.board.paused {
+  opacity: 0.5;
+  pointer-events: none;
 }
