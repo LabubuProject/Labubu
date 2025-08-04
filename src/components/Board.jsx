@@ -174,19 +174,22 @@ const Board = () => {
       {resetButton}
       {!gameStarted && (
         <div className='flex flex-col items-center space-y-4'>
-          <div className='flex items-center space-x-2 bg-white'>
-            <label htmlFor='grid-size' className='text-lg text-black'>
-              Grid Size:
+          <div className='flex items-center space-x-2 bg-transparent'>
+            <label
+              htmlFor='grid-size'
+              className='text-xl text-white text-shadow-lg/10'
+            >
+              Enter Grid Size:
             </label>
             <input
               id='grid-size'
               type='number'
+              placeholder='3'
               min={2}
               max={8}
               onChange={(e) => setGridSize(Number(e.target.value))}
-              className='w-16 px-2 py-1 rounded border'
+              className='w-16 px-2 py-1 border-2 bg-white rounded-md border-gray-100 focus:border-teal-500 focus:outline-none'
             />
-            <span className='text-black'>Pairs</span>
           </div>
           <button
             className='w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]'
