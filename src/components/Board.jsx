@@ -4,7 +4,7 @@ import Header from './Header';
 import { useAuth } from '../AuthContext/AuthContext';
 const Board = () => {
   const { user, logout } = useAuth();
-  const [gridSize, _setGridSize] = useState(6); // To-Do: creating an input to select grid size
+  const [gridSize, setGridSize] = useState(4); 
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -13,7 +13,7 @@ const Board = () => {
   const [gameWon, setGameWon] = useState(false);
   const [dim, setDim] = useState();
   const [paused, setPaused] = useState(false);
-  const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const imgArr = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const [reset, setReset] = useState(false);
 
   /* checking for matched cards every time two cards are selected */
@@ -129,11 +129,11 @@ const Board = () => {
         onClick={() => setPaused((p) => !p)}
         className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
           paused
-            ? 'bg-[#A1D6D4] hover:bg-[#637A31]'
-            : 'bg-[#DD7F56] hover:bg-[#41A5A4]'
+            ? "bg-[#A1D6D4] hover:bg-[#637A31]"
+            : "bg-[#DD7F56] hover:bg-[#41A5A4]"
         }`}
       >
-        {paused ? 'Resume' : 'Pause'}
+        {paused ? "Resume" : "Pause"}
       </button>
     );
     resetButton = (
@@ -159,10 +159,10 @@ const Board = () => {
       {gameStarted && (
         <>
           <div
-            className='grid gap-4 justify-center'
+            className="grid gap-4 justify-center"
             style={{
               gridTemplateColumns: `repeat(${dim}, 6rem)`,
-              justifyContent: 'center',
+              justifyContent: "center",
             }}
           >
             {board.map((value, index) => (
@@ -185,12 +185,28 @@ const Board = () => {
       {pauseButton}
       {resetButton}
       {!gameStarted && (
-        <button
-          className='w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]'
-          onClick={startGame}
-        >
-          StartGame
-        </button>
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex items-center space-x-2 bg-white">
+            <label htmlFor="grid-size" className="text-lg text-black">
+              Grid Size:
+            </label>
+            <input
+              id="grid-size"
+              type="number"
+              min={2}
+              max={8}
+              onChange={(e) => setGridSize(Number(e.target.value))}
+              className="w-16 px-2 py-1 rounded border"
+            />
+            <span className="text-black">Pairs</span>
+          </div>
+          <button
+            className="w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]"
+            onClick={startGame}
+          >
+            Start Game
+          </button>
+        </div>
       )}
       {user && (
         <button
