@@ -1,6 +1,7 @@
 import { useState, useContext, use } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext/AuthContext';
+import Header from './Header.jsx';
 
 export default function Login() {
   const { login } = useContext(AuthContext);
@@ -19,7 +20,8 @@ export default function Login() {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center px-4'>
+    <div className="min-h-screen flex flex-col space-y-6 items-center justify-center px-4">
+        <Header flips={0} gameStarted={false} gameWon={false} />
       <div className='w-full max-w-md bg-white bg-opacity-80 backdrop-blur-sm p-8 rounded-lg shadow-lg'>
         <form onSubmit={submit}>
           <h2 className='text-2xl font-semibold text-center text-ebony mb-6'>
