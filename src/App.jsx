@@ -3,12 +3,13 @@ import Board from './components/Board';
 import Signup from './components/Signup';
 import Login from './components/Login.jsx';
 import { AuthProvider } from './AuthContext/AuthContext.jsx';
+import ProtectRoute from './components/ProtectRoute.jsx';
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path='/' element={<Board />} />
+        <Route path='/' element={<ProtectRoute> <Board /> </ProtectRoute>} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
       </Routes>
