@@ -20,13 +20,11 @@ userController.verifyUser = async (req, res, next) => {
     // find the user by username
     const user = await User.findOne({ username });
     if (!user) {
-      // no such user → back to signup
-      return res.redirect('/signup');
+      return res.status(401).json({ error: 'Invalid username or password' });
     }
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      // wrong password → back to signup
-      return res.redirect('/signup');
+      return res.status(401).json({ error: 'Invalid username or password' });
     }
     // otherwise they’re good—stash for downstream if you like
     res.locals.user = user;
@@ -37,4 +35,4 @@ userController.verifyUser = async (req, res, next) => {
   }
 };
 
-export default userController
+export default userController;
