@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [user, setUser] = useState(null);
 
@@ -15,9 +15,8 @@ export function AuthProvider({ children }) {
       axios
         .get('/api/user/myProfile')
         .then((res) => setUser(res.data.profile))
-        .catch(() => {
-          setToken(null);
-          setUser(null);
+        .catch((err) => {
+          console.log('user error', err);
         });
     } else {
       localStorage.removeItem('token');
@@ -42,6 +41,7 @@ export function AuthProvider({ children }) {
       password,
     });
     setToken(data.token);
+    setUser(data.user);
     //useNavigate('/api/user/Board');
   };
 
@@ -55,4 +55,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
