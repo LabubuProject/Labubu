@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Card from './Card';
-import Header from './Header';
-
+import React, { useEffect, useState } from "react";
+import Card from "./Card";
+import Header from "./Header";
+import { useAuth } from "../AuthContext/AuthContext";
 const Board = () => {
-  const [gridSize, _setGridSize] = useState(2); //creating in anticipation of game levels
+  const { user, logout } = useAuth();
+  const [gridSize, _setGridSize] = useState(8); //creating in anticipation of game levels
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -37,7 +38,7 @@ const Board = () => {
   useEffect(() => {
     console.log(matchedCards);
     if (gameStarted && matchedCards.length === gridSize * 2) {
-      console.log('win');
+      console.log("win");
       setGameWon(true);
     }
   }, [matchedCards, gridSize, gameStarted]);
@@ -146,7 +147,7 @@ const Board = () => {
   }
 
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center'>
+    <div className="min-h-screen flex flex-col items-center justify-center">
       <Header
         flips={numOfFlips}
         gameWon={gameWon}
@@ -183,10 +184,18 @@ const Board = () => {
       {resetButton}
       {!gameStarted && (
         <button
-          className='w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]'
+          className="w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]"
           onClick={startGame}
         >
           StartGame
+        </button>
+      )}
+      {user && (
+        <button
+          onClick={logout}
+          className="mt-4 px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition"
+        >
+          Log Out
         </button>
       )}
     </div>
