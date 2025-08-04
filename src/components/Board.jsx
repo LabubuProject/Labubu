@@ -4,7 +4,7 @@ import Header from './Header';
 import { useAuth } from '../AuthContext/AuthContext';
 const Board = () => {
   const { user, logout } = useAuth();
-  const [gridSize, _setGridSize] = useState(6);
+  const [gridSize, _setGridSize] = useState(6); // To-Do: creating an input to select grid size
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -36,7 +36,9 @@ const Board = () => {
 
   /* checking for game completion every time a match is made */
   useEffect(() => {
+    console.log(matchedCards);
     if (gameStarted && matchedCards.length === gridSize * 2) {
+      console.log('win');
       setGameWon(true);
     }
   }, [matchedCards, gridSize, gameStarted]);
@@ -62,9 +64,11 @@ const Board = () => {
     const totalCards = gridSize * 2;
     const pairCount = Math.floor(totalCards / 2);
     const numbers = [...Array(pairCount).keys()].map((n) => n + 1);
-    const shuffledCards = [...numbers, ...numbers]
+    //console.log(numbers);
+    const shuffledCards = [...numbers, ...numbers] //copying numbers so each one appears twice
       .sort(() => Math.random() - 0.5)
       .slice(0, totalCards);
+    //.map((number, index) => ({ id: index, number, letter: 'A'}));
 
     const imageAssign = assignImgHelper(imgArr, shuffledCards);
     const newShuffledCards = shuffledCards.map((number, index) => ({
@@ -74,13 +78,20 @@ const Board = () => {
     }));
     setBoard(newShuffledCards);
     setDim(Math.ceil(Math.sqrt(newShuffledCards.length)));
+    // const image
+    //may need these if we have restart button or multiple levels
+    // setSelectedCards([]);
+    // setMatchedCards([]);
+    // setGameWon(false);
   };
 
   const handleFlipCard = (index, value) => {
     if (paused) return;
     setNumOfFlips(numOfFlips + 1);
+    //check if card at index is already in array
     const currCard = selectedCards.find((card) => card.index === index);
 
+    //setseleted cards max length is 2
     if (!currCard && selectedCards.length < 2) {
       setSelectedCards((prevSelectedCards) => [
         ...prevSelectedCards,
@@ -91,6 +102,7 @@ const Board = () => {
     }
   };
 
+  //help function for assigning image letter of each card
   const assignImgHelper = (imgArr, numArr) => {
     const uniqueNums = [...new Set(numArr)];
     const obj = {};
@@ -147,7 +159,11 @@ const Board = () => {
       {gameStarted && (
         <>
           <div
-            className="grid gap-1 sm:gap-1 justify-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+            className='grid gap-4 justify-center'
+            style={{
+              gridTemplateColumns: `repeat(${dim}, 6rem)`,
+              justifyContent: 'center',
+            }}
           >
             {board.map((value, index) => (
               <Card
