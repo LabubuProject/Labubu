@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import Header from "./Header";
+import React, { useEffect, useState } from 'react';
+import Card from './Card';
+import Header from './Header';
 
 const Board = () => {
-  const [gridSize, _setGridSize] = useState(2); //creating in anticipation of game levels
+  const [gridSize, _setGridSize] = useState(6); //creating in anticipation of game levels
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -11,7 +11,7 @@ const Board = () => {
   const [numOfFlips, setNumOfFlips] = useState(0);
   const [gameWon, setGameWon] = useState(false);
   const [paused, setPaused] = useState(false);
-  const imgArr = ["A", "B", "C", "D"];
+  const imgArr = ['A', 'B', 'C', 'D'];
 
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
@@ -35,7 +35,7 @@ const Board = () => {
   useEffect(() => {
     console.log(matchedCards);
     if (gameStarted && matchedCards.length === gridSize * 2) {
-      console.log("win");
+      console.log('win');
       setGameWon(true);
     }
   }, [matchedCards, gridSize, gameStarted]);
@@ -95,11 +95,16 @@ const Board = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <Header flips={numOfFlips} gameWon={gameWon} gameStarted={gameStarted} paused={paused} />
+    <div className='min-h-screen flex flex-col items-center justify-center'>
+      <Header
+        flips={numOfFlips}
+        gameWon={gameWon}
+        gameStarted={gameStarted}
+        paused={paused}
+      />
       {gameStarted && (
         <>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1 mb-6 overflow-hidden">
+          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1 mb-6 overflow-hidden'>
             {board.map((value, index) => (
               <Card
                 key={index}
@@ -114,15 +119,19 @@ const Board = () => {
           </div>
           <button
             onClick={() => setPaused((p) => !p)}
-            className="mt-4 px-4 py-2 bg-red-400 rounded shadow hover:bg-red-500"
+            className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
+              paused
+                ? 'bg-[#8aa749] hover:bg-[#637A31]'
+                : 'bg-[#DD7F56] hover:bg-[#dd906f]'
+            }`}
           >
-            {paused ? "Resume" : "Pause"}
+            {paused ? 'Resume' : 'Pause'}
           </button>
         </>
       )}
       {!gameStarted && (
         <button
-          className="w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]"
+          className='w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]'
           onClick={startGame}
         >
           StartGame
