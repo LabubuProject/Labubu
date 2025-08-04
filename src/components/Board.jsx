@@ -4,7 +4,7 @@ import Header from './Header';
 import { useAuth } from '../AuthContext/AuthContext';
 const Board = () => {
   const { user, logout } = useAuth();
-  const [gridSize, _setGridSize] = useState(8);
+  const [gridSize, _setGridSize] = useState(6);
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -147,11 +147,7 @@ const Board = () => {
       {gameStarted && (
         <>
           <div
-            className='grid gap-4 justify-center'
-            style={{
-              gridTemplateColumns: `repeat(${dim}, 6rem)`,
-              justifyContent: 'center',
-            }}
+            className="grid gap-1 sm:gap-1 justify-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
           >
             {board.map((value, index) => (
               <Card

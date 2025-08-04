@@ -13,8 +13,8 @@ const Card = ({
 
   return (
     <div
-      // if card is selected, click listener is disabled
-      className='card w-24 h-32 m-2'
+      //if card is selected, click listener is disabled
+      className='card w-24 h-24 m-2'
       onClick={!flipped ? () => onClick(index, value) : null}
     >
       <div className={`card-inner ${flipped ? 'flipped' : ''}`}>
