@@ -20,33 +20,6 @@ tokenController.verifyUserToken = async (req, res, next) => {
   }
 };
 
-tokenController.protect = async (req, _res, next) => {
-  let token;
-
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    try {
-      token = req.headers.authorization.split(' ')[1];
-
-      // if token is valid, data is stored in decoded variable
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      // exclude password from find
-      req.user = await User.findById(decoded.id).select('-password');
-      return next();
-    } catch (err) {
-      return next({
-        log: `Error caught in tokenController.protect: ${err}`,
-        message: {
-          err: 'Not authorized, token failed',
-        },
-      });
-    }
-  }
-};
-
 tokenController.generateToken = (req, res, next) => {
   const id = res.locals.user._id;
   try {

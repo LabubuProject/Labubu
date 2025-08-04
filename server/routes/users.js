@@ -19,7 +19,7 @@ router.post(
 
 router.put(
   '/updateuser',
-  tokenController.protect,
+  tokenController.verifyUserToken,
   userController.updateUser,
   (_req, res) => {
     res.status(200).send({ stats: res.locals.user });

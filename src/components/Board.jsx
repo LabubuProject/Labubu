@@ -96,6 +96,24 @@ const Board = () => {
     return obj;
   };
 
+  let pauseButton;
+  if (!gameWon && numOfFlips === 0) {
+    pauseButton = <></>;
+  } else {
+    pauseButton = (
+      <button
+        onClick={() => setPaused((p) => !p)}
+        className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
+          paused
+            ? 'bg-[#A1D6D4] hover:bg-[#637A31]'
+            : 'bg-[#DD7F56] hover:bg-[#41A5A4]'
+        }`}
+      >
+        {paused ? 'Resume' : 'Pause'}
+      </button>
+    );
+  }
+
   return (
     <div className='min-h-screen flex flex-col items-center justify-center'>
       <Header
@@ -105,29 +123,32 @@ const Board = () => {
         paused={paused}
       />
       {gameStarted && (
-        <div
+        <>
+          <div
           className='grid gap-4 justify-center'
           style={{
             gridTemplateColumns: `repeat(${dim}, 6rem)`,
             justifyContent: 'center',
           }}
         >
-          {board.map((value, index) => (
-            <Card
-              key={index}
-              index={index}
-              value={value.number}
-              letter={value.letter}
-              selectedCards={selectedCards}
-              matchedCards={matchedCards}
-              onClick={() => handleFlipCard(index, value)}
-              /* when we add parameters to the handleFlipCard function, it will be immediately 
+            {board.map((value, index) => (
+              <Card
+                key={index}
+                index={index}
+                value={value.number}
+                letter={value.letter}
+                selectedCards={selectedCards}
+                matchedCards={matchedCards}
+                onClick={() => handleFlipCard(index, value)}
+                              /* when we add parameters to the handleFlipCard function, it will be immediately 
                   invoked when a card component renders. To avoid this, we pass the arrow function as
                   the function reference to the onclick handler, now the function will only run on click */
-            />
-          ))}
-        </div>
+              />
+            ))}
+          </div>
+        </>
       )}
+      {pauseButton}
       {!gameStarted && (
         <button
           className='w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]'
