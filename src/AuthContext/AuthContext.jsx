@@ -1,10 +1,12 @@
-import { useState, createContext, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
+/* eslint-disable react-refresh/only-export-components */
+import { useState, createContext, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [token, setToken] = useState(() => localStorage.getItem('token'));
   const [user, setUser] = useState(null);
 
@@ -47,7 +49,10 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setToken(null);
-    // useNavigate('/api/user/login');
+    setUser(null);
+    localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization'];
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -56,3 +61,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+export function useAuth() {
+  return useContext(AuthContext);
+}

@@ -13,9 +13,9 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(username, password);
-      navigate('/'); // Redirect to home after login
+      navigate('/',{replace: true}); // Redirect to home after login
     } catch (err) {
-      alert('Login failed', err);
+      alert(`${err}:Invalid username or password`);
     }
   };
 
