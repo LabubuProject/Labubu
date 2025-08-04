@@ -13,7 +13,8 @@ const Board = () => {
   const [gameWon, setGameWon] = useState(false);
   const [dim, setDim] = useState();
   const [paused, setPaused] = useState(false);
-  const imgArr = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const [reset, setReset] = useState(false);
 
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
@@ -41,6 +42,21 @@ const Board = () => {
       setGameWon(true);
     }
   }, [matchedCards, gridSize, gameStarted]);
+
+  /* check for if game is resetting */
+  useEffect(() => {
+    if (reset) {
+      setBoard([]);
+      setGameStarted(false);
+      setSelectedCards([]);
+      setGameWon(false);
+      setMatchedCards([]);
+      setNumOfFlips(0);
+      setPaused(false);
+      setReset(false);
+      setDim([]);
+    }
+  }, [reset]);
 
   const startGame = (e) => {
     e.preventDefault();
@@ -97,9 +113,16 @@ const Board = () => {
     return obj;
   };
 
+  const handleReset = (e) => {
+    startGame(e);
+    setReset(true);
+  }
+
   let pauseButton;
+  let resetButton;
   if (!gameWon && numOfFlips === 0) {
     pauseButton = <></>;
+    resetButton = <></>;
   } else {
     pauseButton = (
       <button
@@ -111,6 +134,14 @@ const Board = () => {
         }`}
       >
         {paused ? 'Resume' : 'Pause'}
+      </button>
+    );
+    resetButton = (
+      <button
+        onClick={handleReset}
+        className={'mt-4 px-4 py-2 text-white rounded-xl shadow transition bg-[#EF476F] hover:bg-[#D62839]'}
+      >
+        Reset Game
       </button>
     );
   }
@@ -125,7 +156,13 @@ const Board = () => {
       />
       {gameStarted && (
         <>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1 mb-6 overflow-hidden">
+          <div
+            className='grid gap-4 justify-center'
+            style={{
+              gridTemplateColumns: `repeat(${dim}, 6rem)`,
+              justifyContent: 'center',
+            }}
+          >
             {board.map((value, index) => (
               <Card
                 key={index}
@@ -135,24 +172,16 @@ const Board = () => {
                 selectedCards={selectedCards}
                 matchedCards={matchedCards}
                 onClick={() => handleFlipCard(index, value)}
-                              /* when we add parameters to the handleFlipCard function, it will be immediately 
+                /* when we add parameters to the handleFlipCard function, it will be immediately 
                   invoked when a card component renders. To avoid this, we pass the arrow function as
                   the function reference to the onclick handler, now the function will only run on click */
               />
             ))}
           </div>
-    <button
-      onClick={() => setPaused((p) => !p)}
-      className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
-        paused
-          ? "bg-[#8aa749] hover:bg-[#637A31]"
-          : "bg-[#DD7F56] hover:bg-[#dd906f]"
-      }`}
-    >
-      {paused ? "Resume" : "Pause"}
-    </button>
-  </>
-)}
+        </>
+      )}
+      {pauseButton}
+      {resetButton}
       {!gameStarted && (
         <button
           className="w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]"
