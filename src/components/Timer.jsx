@@ -6,20 +6,20 @@ function formatTime(totalSecs) {
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
-const Timer = ({ gameStarted, gameWon }) => {
+const Timer = ({ gameStarted, gameWon, paused}) => {
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
     let intervalId;
 
-    if (gameStarted && !gameWon) {
+    if (gameStarted && !gameWon && !paused) {
       intervalId = setInterval(() => {
         setSeconds((s) => s + 1);
       }, 1000);
     }
 
     return () => clearInterval(intervalId);
-  }, [gameStarted, gameWon]);
+  }, [gameStarted, gameWon, paused]);
 
   useEffect(() => {
     if (!gameStarted) {
