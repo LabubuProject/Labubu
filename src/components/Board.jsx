@@ -10,6 +10,7 @@ const Board = () => {
   const [matchedCards, setMatchedCards] = useState([]);
   const [numOfFlips, setNumOfFlips] = useState(0);
   const [gameWon, setGameWon] = useState(false);
+  const [dim, setDim] = useState();
   const [paused, setPaused] = useState(false);
   const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
@@ -59,6 +60,7 @@ const Board = () => {
       letter: imageAssign[number],
     }));
     setBoard(newShuffledCards);
+    setDim(Math.ceil(Math.sqrt(newShuffledCards.length)));
     // const image
     //may need these if we have restart button or multiple levels
     // setSelectedCards([]);
@@ -103,31 +105,28 @@ const Board = () => {
         paused={paused}
       />
       {gameStarted && (
-        <>
-          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1 mb-6 overflow-hidden'>
-            {board.map((value, index) => (
-              <Card
-                key={index}
-                index={index}
-                value={value.number}
-                letter={value.letter}
-                selectedCards={selectedCards}
-                matchedCards={matchedCards}
-                onClick={() => handleFlipCard(index, value)}
-              />
-            ))}
-          </div>
-          <button
-            onClick={() => setPaused((p) => !p)}
-            className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
-              paused
-                ? 'bg-[#8aa749] hover:bg-[#637A31]'
-                : 'bg-[#DD7F56] hover:bg-[#dd906f]'
-            }`}
-          >
-            {paused ? 'Resume' : 'Pause'}
-          </button>
-        </>
+        <div
+          className='grid gap-4 justify-center'
+          style={{
+            gridTemplateColumns: `repeat(${dim}, 6rem)`,
+            justifyContent: 'center',
+          }}
+        >
+          {board.map((value, index) => (
+            <Card
+              key={index}
+              index={index}
+              value={value.number}
+              letter={value.letter}
+              selectedCards={selectedCards}
+              matchedCards={matchedCards}
+              onClick={() => handleFlipCard(index, value)}
+              /* when we add parameters to the handleFlipCard function, it will be immediately 
+                  invoked when a card component renders. To avoid this, we pass the arrow function as
+                  the function reference to the onclick handler, now the function will only run on click */
+            />
+          ))}
+        </div>
       )}
       {!gameStarted && (
         <button
