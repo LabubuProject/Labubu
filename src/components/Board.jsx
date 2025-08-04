@@ -13,7 +13,6 @@ const Board = () => {
   const [paused, setPaused] = useState(false);
   const imgArr = ["A", "B", "C", "D"];
 
-  console.log(board);
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
     if (selectedCards.length === 2) {
@@ -38,9 +37,8 @@ const Board = () => {
     if (gameStarted && matchedCards.length === gridSize * 2) {
       console.log("win");
       setGameWon(true);
-      //TO-DO: create http PUT request to users db with total flips and timer(placeholder)
     }
-  }, [matchedCards, gridSize, gameStarted, gameWon]);
+  }, [matchedCards, gridSize, gameStarted]);
 
   const startGame = (e) => {
     e.preventDefault();
