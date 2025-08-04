@@ -9,7 +9,7 @@ const Header = ({ flips, gameWon, gameStarted }) => {
         Labu Who?
       </h1>
       {gameStarted && (
-        <Stats flips={flips} gameWon={gameWon} gameStarted={gameStarted} />
+        <Stats flips={flips} gameWon={gameWon}/>
       )}
     </div>
   );
