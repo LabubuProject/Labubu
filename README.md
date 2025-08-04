@@ -64,7 +64,7 @@ Users should be able to:
 11. Styled components using Tailwind.css
 
 ## Major Coding Win
-Applying a limited number of cards to card pairs:
+Applying a limited number of images to any number of card pairs:
 ```js
 const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
