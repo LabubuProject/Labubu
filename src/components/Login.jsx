@@ -13,7 +13,7 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(username, password);
-      navigate('/',{replace: true}); // Redirect to home after login
+      navigate('/', { replace: true });
     } catch (err) {
       alert(`${err}:Invalid username or password`);
     }
@@ -58,7 +58,7 @@ export default function Login() {
             Log In
           </button>
           <p className='text-center text-sm text-ebony mt-4'>
-            Don’t have an account?{' '}
+            {`Don’t have an account? `}
             <Link className='underline' to='/signup'>
               Sign up
             </Link>

@@ -8,28 +8,26 @@ function formatTime(totalSecs) {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-const Timer = ({ gameStarted, gameWon, paused}) => {
+const Timer = ({ gameStarted, gameWon, paused }) => {
+  const [seconds, setSeconds] = useState(0);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     if (gameWon) {
       const updateUser = async () => {
         try {
-          const res = await axios.put('api/user/updateuser', {
+          await axios.put('api/user/updateuser', {
             username: user.username,
             bestTime: seconds,
             highestLevel: 1,
           });
-          console.log(res.data);
         } catch (err) {
           console.log('error updating user', err);
         }
       };
       updateUser();
     }
-  }, [gameWon]);
-  
-  const [seconds, setSeconds] = useState(0);
+  }, [gameWon, user, seconds]);
 
   useEffect(() => {
     let intervalId;

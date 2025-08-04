@@ -44,10 +44,8 @@ userController.updateUser = async (req, res, next) => {
 };
 
 userController.verifyUser = async (req, res, next) => {
-  // write code here
   const { username, password } = req.body;
   try {
-    // find the user by username
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(401).json({ error: 'Invalid username or password' });
@@ -56,9 +54,7 @@ userController.verifyUser = async (req, res, next) => {
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
-    // otherwise they’re good—stash for downstream if you like
     res.locals.user = user;
-    // and send them to the secret page
     return next();
   } catch (err) {
     return next(err);
