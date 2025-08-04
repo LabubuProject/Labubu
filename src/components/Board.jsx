@@ -4,7 +4,7 @@ import Header from './Header';
 import { useAuth } from '../AuthContext/AuthContext';
 const Board = () => {
   const { user, logout } = useAuth();
-  const [gridSize, setGridSize] = useState(4);
+  const [gridSize, setGridSize] = useState(6);
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -45,6 +45,7 @@ const Board = () => {
   useEffect(() => {
     if (reset) {
       setBoard([]);
+      setGridSize(6);
       setGameStarted(false);
       setSelectedCards([]);
       setGameWon(false);
@@ -184,7 +185,7 @@ const Board = () => {
             <input
               id='grid-size'
               type='number'
-              placeholder='3'
+              placeholder='6'
               min={2}
               max={8}
               onChange={(e) => setGridSize(Number(e.target.value))}
