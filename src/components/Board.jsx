@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import Header from "./Header";
-import { useAuth } from "../AuthContext/AuthContext";
+import React, { useEffect, useState } from 'react';
+import Card from './Card';
+import Header from './Header';
+import { useAuth } from '../AuthContext/AuthContext';
 const Board = () => {
   const { user, logout } = useAuth();
   const [gridSize, setGridSize] = useState(4); 
@@ -38,7 +38,7 @@ const Board = () => {
   useEffect(() => {
     console.log(matchedCards);
     if (gameStarted && matchedCards.length === gridSize * 2) {
-      console.log("win");
+      console.log('win');
       setGameWon(true);
     }
   }, [matchedCards, gridSize, gameStarted]);
@@ -140,7 +140,7 @@ const Board = () => {
       <button
         onClick={handleReset}
         className={
-          "mt-4 px-4 py-2 text-white rounded-xl shadow transition bg-[#EF476F] hover:bg-[#D62839]"
+          'mt-4 px-4 py-2 text-white rounded-xl shadow transition bg-[#EF476F] hover:bg-[#D62839]'
         }
       >
         Reset Game
@@ -149,7 +149,7 @@ const Board = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
+    <div className='min-h-screen flex flex-col items-center justify-center'>
       <Header
         flips={numOfFlips}
         gameWon={gameWon}
@@ -201,7 +201,7 @@ const Board = () => {
             <span className="text-black">Pairs</span>
           </div>
           <button
-            className="w-32 py-3 text-lg bg-teal-400 rounded-lg shadow hover:bg-teal-500 transition"
+            className="w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]"
             onClick={startGame}
           >
             Start Game
@@ -211,7 +211,7 @@ const Board = () => {
       {user && (
         <button
           onClick={logout}
-          className="mt-4 px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition"
+          className='mt-4 px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition'
         >
           Log Out
         </button>
