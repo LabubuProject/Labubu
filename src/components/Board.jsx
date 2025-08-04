@@ -25,7 +25,7 @@ const Board = () => {
       } else {
         const timeoutId = setTimeout(() => {
           setSelectedCards([]);
-        }, 500);
+        }, 800);
         return () => clearTimeout(timeoutId);
       }
     }
