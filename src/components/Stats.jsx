@@ -1,11 +1,10 @@
 import React from 'react';
-
-const Stats = ({ flips, gameWon, gameStarted }) => {
-  //use gameStarted for timer logic?
+import Timer from './Timer';
+const Stats = ({ flips, gameWon}) => {
   //add user name to win message?
   return (
     <div className='text-center'>
-      <p>Timer: 0:00</p>
+      <Timer gameStarted={flips>0} gameWon={gameWon} />
       <p>{`Number of Flips: ${flips}`}</p>
       {gameWon && <p>You Win!</p>}
     </div>
