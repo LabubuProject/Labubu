@@ -11,6 +11,7 @@ const Board = () => {
   const [numOfFlips, setNumOfFlips] = useState(0);
   const [gameWon, setGameWon] = useState(false);
 
+  console.log(board);
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
     if (
@@ -41,10 +42,10 @@ const Board = () => {
     const shuffledCards = [...numbers, ...numbers] //copying numbers so each one appears twice
       .sort(() => Math.random() - 0.5)
       .slice(0, totalCards)
-      .map((number, index) => ({ id: index, number }));
+      .map((number, index) => ({ id: index, number, letter: 'A' }));
 
     setBoard(shuffledCards);
-
+    // const image
     //may need these if we have restart button or multiple levels
     // setSelectedCards([]);
     // setMatchedCards([]);
@@ -77,6 +78,7 @@ const Board = () => {
               key={index}
               index={index}
               value={value.number}
+              letter={value.letter}
               selectedCards={selectedCards}
               matchedCards={matchedCards}
               onClick={() => handleFlipCard(index, value)}

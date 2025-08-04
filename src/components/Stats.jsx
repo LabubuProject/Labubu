@@ -5,9 +5,9 @@ const Stats = ({ flips, gameWon, gameStarted }) => {
   //add user name to win message?
   return (
     <div className='text-center'>
-      <p>Timer: 0:00</p>
-      <p>{`Number of Flips: ${flips}`}</p>
-      {gameWon && <p>You Win!</p>}
+      <p className='text-xl semibold bg-[#bbce8f] rounded-lg p-2 mb-1'>
+        {`Timer: 0:00   Flips: ${flips}`}
+      </p>
     </div>
   );
 };
