@@ -3,15 +3,16 @@ import Card from './Card';
 import Header from './Header';
 
 const Board = () => {
-  const [gridSize, _setGridSize] = useState(6); //creating in anticipation of game levels
+  const [gridSize, _setGridSize] = useState(8); //creating in anticipation of game levels
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
   const [numOfFlips, setNumOfFlips] = useState(0);
   const [gameWon, setGameWon] = useState(false);
+  const [dim, setDim] = useState();
   const [paused, setPaused] = useState(false);
-  const imgArr = ['A', 'B', 'C', 'D'];
+  const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
@@ -59,6 +60,7 @@ const Board = () => {
       letter: imageAssign[number],
     }));
     setBoard(newShuffledCards);
+    setDim(Math.ceil(Math.sqrt(newShuffledCards.length)));
     // const image
     //may need these if we have restart button or multiple levels
     // setSelectedCards([]);
@@ -122,7 +124,13 @@ const Board = () => {
       />
       {gameStarted && (
         <>
-          <div className='grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1 mb-6 overflow-hidden'>
+          <div
+          className='grid gap-4 justify-center'
+          style={{
+            gridTemplateColumns: `repeat(${dim}, 6rem)`,
+            justifyContent: 'center',
+          }}
+        >
             {board.map((value, index) => (
               <Card
                 key={index}
@@ -132,6 +140,9 @@ const Board = () => {
                 selectedCards={selectedCards}
                 matchedCards={matchedCards}
                 onClick={() => handleFlipCard(index, value)}
+                              /* when we add parameters to the handleFlipCard function, it will be immediately 
+                  invoked when a card component renders. To avoid this, we pass the arrow function as
+                  the function reference to the onclick handler, now the function will only run on click */
               />
             ))}
           </div>
