@@ -20,7 +20,7 @@ app.get('/', (_req, res) => {
 
 app.use('/api/user', userRouter);
 
-/* 404 handler - TO-DO: Create custom page */
+/* 404 handler - TO-DO: Create custom 404 page */
 app.use('*catchall', (_req, res) => {
   res.status(404).send('Not Found');
 });
