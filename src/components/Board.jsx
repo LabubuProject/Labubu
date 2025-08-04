@@ -126,13 +126,6 @@ const Board = () => {
       {gameStarted && (
         <>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-1 mb-6 overflow-hidden">
-          <div
-          className='grid gap-4 justify-center'
-          style={{
-            gridTemplateColumns: `repeat(${dim}, 6rem)`,
-            justifyContent: 'center',
-          }}
-        >
             {board.map((value, index) => (
               <Card
                 key={index}
@@ -148,19 +141,18 @@ const Board = () => {
               />
             ))}
           </div>
-          <button
-            onClick={() => setPaused((p) => !p)}
-            className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
-              paused
-                ? "bg-[#8aa749] hover:bg-[#637A31]"
-                : "bg-[#DD7F56] hover:bg-[#dd906f]"
-            }`}
-          >
-            {paused ? "Resume" : "Pause"}
-          </button>
-        </>
-      )}
-      {pauseButton}
+    <button
+      onClick={() => setPaused((p) => !p)}
+      className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
+        paused
+          ? "bg-[#8aa749] hover:bg-[#637A31]"
+          : "bg-[#DD7F56] hover:bg-[#dd906f]"
+      }`}
+    >
+      {paused ? "Resume" : "Pause"}
+    </button>
+  </>
+)}
       {!gameStarted && (
         <button
           className="w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]"
