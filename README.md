@@ -64,11 +64,11 @@ Users should be able to:
 11. Styled components using Tailwind.css
 
 ## Major Coding Win
-
+Applying a limited number of cards to card pairs:
 ```js
 const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-/
+
 const assignImgHelper = (imgArr, numArr) => {
     const uniqueNums = [...new Set(numArr)];
     const obj = {};
@@ -110,6 +110,7 @@ const startGame = (e) => {
 - Lisa
   - game logic
   - Tailwind syntax
+  - responsive mobile-first design
 
 ## Installation Instructions
 
