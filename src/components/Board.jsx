@@ -3,7 +3,7 @@ import Card from './Card';
 import Header from './Header';
 
 const Board = () => {
-  const [gridSize, _setGridSize] = useState(6); //creating in anticipation of game levels
+  const [gridSize, _setGridSize] = useState(8); //creating in anticipation of game levels
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -11,7 +11,7 @@ const Board = () => {
   const [numOfFlips, setNumOfFlips] = useState(0);
   const [gameWon, setGameWon] = useState(false);
   const [paused, setPaused] = useState(false);
-  const imgArr = ['A', 'B', 'C', 'D'];
+  const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
