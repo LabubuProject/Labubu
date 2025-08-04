@@ -13,7 +13,7 @@ const Card = ({
 
   return (
     <div
-      //if card is selected, click listener is disabled
+      // if card is selected, click listener is disabled
       className='card w-24 h-32 m-2'
       onClick={!flipped ? () => onClick(index, value) : null}
     >
@@ -21,8 +21,7 @@ const Card = ({
         <div className='card-front rounded-lg shadow-lg flex items-center justify-center bg-gradient-to-br from-[#f7b2b7] to-[#D89B9E] text-ebony text-xl'></div>
         <div
           className={`card-back rounded-lg shadow-lg flex items-center justify-center bg-white text-3xl cardImage${letter}`}
-        >
-        </div>
+        ></div>
       </div>
     </div>
   );

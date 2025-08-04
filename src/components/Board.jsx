@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import Header from "./Header";
-import { useAuth } from "../AuthContext/AuthContext";
+import React, { useEffect, useState } from 'react';
+import Card from './Card';
+import Header from './Header';
+import { useAuth } from '../AuthContext/AuthContext';
 const Board = () => {
   const { user, logout } = useAuth();
-  const [gridSize, _setGridSize] = useState(8); //creating in anticipation of game levels
+  const [gridSize, _setGridSize] = useState(8);
   const [board, setBoard] = useState([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -36,9 +36,7 @@ const Board = () => {
 
   /* checking for game completion every time a match is made */
   useEffect(() => {
-    console.log(matchedCards);
     if (gameStarted && matchedCards.length === gridSize * 2) {
-      console.log("win");
       setGameWon(true);
     }
   }, [matchedCards, gridSize, gameStarted]);
@@ -64,11 +62,9 @@ const Board = () => {
     const totalCards = gridSize * 2;
     const pairCount = Math.floor(totalCards / 2);
     const numbers = [...Array(pairCount).keys()].map((n) => n + 1);
-    //console.log(numbers);
-    const shuffledCards = [...numbers, ...numbers] //copying numbers so each one appears twice
+    const shuffledCards = [...numbers, ...numbers]
       .sort(() => Math.random() - 0.5)
       .slice(0, totalCards);
-    //.map((number, index) => ({ id: index, number, letter: 'A'}));
 
     const imageAssign = assignImgHelper(imgArr, shuffledCards);
     const newShuffledCards = shuffledCards.map((number, index) => ({
@@ -78,20 +74,13 @@ const Board = () => {
     }));
     setBoard(newShuffledCards);
     setDim(Math.ceil(Math.sqrt(newShuffledCards.length)));
-    // const image
-    //may need these if we have restart button or multiple levels
-    // setSelectedCards([]);
-    // setMatchedCards([]);
-    // setGameWon(false);
   };
 
   const handleFlipCard = (index, value) => {
     if (paused) return;
     setNumOfFlips(numOfFlips + 1);
-    //check if card at index is already in array
     const currCard = selectedCards.find((card) => card.index === index);
 
-    //setseleted cards max length is 2
     if (!currCard && selectedCards.length < 2) {
       setSelectedCards((prevSelectedCards) => [
         ...prevSelectedCards,
@@ -102,7 +91,6 @@ const Board = () => {
     }
   };
 
-  //help function for assigning image letter of each card
   const assignImgHelper = (imgArr, numArr) => {
     const uniqueNums = [...new Set(numArr)];
     const obj = {};
@@ -116,7 +104,7 @@ const Board = () => {
   const handleReset = (e) => {
     startGame(e);
     setReset(true);
-  }
+  };
 
   let pauseButton;
   let resetButton;
@@ -139,7 +127,9 @@ const Board = () => {
     resetButton = (
       <button
         onClick={handleReset}
-        className={'mt-4 px-4 py-2 text-white rounded-xl shadow transition bg-[#EF476F] hover:bg-[#D62839]'}
+        className={
+          'mt-4 px-4 py-2 text-white rounded-xl shadow transition bg-[#EF476F] hover:bg-[#D62839]'
+        }
       >
         Reset Game
       </button>
@@ -147,7 +137,7 @@ const Board = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
+    <div className='min-h-screen flex flex-col items-center justify-center'>
       <Header
         flips={numOfFlips}
         gameWon={gameWon}
@@ -184,7 +174,7 @@ const Board = () => {
       {resetButton}
       {!gameStarted && (
         <button
-          className="w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]"
+          className='w-30 py-3 text-lg bg-[#A1D6D4] rounded-lg transition shadow-sm text-[#535A53] hover:bg-[#41A5A4]'
           onClick={startGame}
         >
           StartGame
@@ -193,7 +183,7 @@ const Board = () => {
       {user && (
         <button
           onClick={logout}
-          className="mt-4 px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition"
+          className='mt-4 px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition'
         >
           Log Out
         </button>
