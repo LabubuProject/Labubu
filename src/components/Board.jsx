@@ -15,14 +15,19 @@ const Board = () => {
   console.log(board);
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
-    if (
-      selectedCards.length === 2 &&
-      selectedCards[0].letter === selectedCards[1].letter
-    ) {
-      setMatchedCards((prevMatchedCards) => [
-        ...prevMatchedCards,
-        ...selectedCards,
-      ]);
+    if (selectedCards.length === 2) {
+      if (selectedCards[0].letter === selectedCards[1].letter) {
+        setMatchedCards((prevMatchedCards) => [
+          ...prevMatchedCards,
+          ...selectedCards,
+        ]);
+        setSelectedCards([]);
+      } else {
+        const timeoutId = setTimeout(() => {
+          setSelectedCards([]);
+        }, 800);
+        return () => clearTimeout(timeoutId);
+      }
     }
   }, [selectedCards]);
 
