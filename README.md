@@ -128,11 +128,13 @@ const startGame = (e) => {
   - style timer
   - add dark-mode styling
   - add back-of-card textured image
+  - make the project more responsive
 - Feature
-  - add dropdown to choose board grid size
+  - add multiple levels to game
   - create a 404 page
-  - create leaderboard page
+  - create leaderboard page and route
   - add background music with volume controls
+  - create hamburger menu for game controls
   - create the option for a two-player game
 
 ## Resources
