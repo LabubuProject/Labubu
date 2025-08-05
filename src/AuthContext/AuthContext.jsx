@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }) => {
     });
     setToken(data.token);
     setUser(data.user);
-    //useNavigate('/api/user/Board');
   };
 
   const login = async (username, password) => {
@@ -44,7 +43,6 @@ export const AuthProvider = ({ children }) => {
     });
     setToken(data.token);
     setUser(data.user);
-    //useNavigate('/api/user/Board');
   };
 
   const logout = () => {
