@@ -26,6 +26,14 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  {
+    files: ['**/*.test.js', '**/*.test.jsx'],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
+    },
+  },
   // Override for server files to enable node globally and make sure backend not in a browser environment 
   {
     files: ['server/**/*.js', 'db.js'],
