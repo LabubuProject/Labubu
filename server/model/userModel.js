@@ -10,6 +10,7 @@ const userSchema = new Schema({
 
 const saltRounds = 5;
 
+
 userSchema.pre('save', async function (next) {
   try {
     const salt = await bcrypt.genSalt(saltRounds);
