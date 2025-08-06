@@ -42,11 +42,11 @@ router.put(
   (_req, res) => res.status(200).json({ updatedUser: res.locals.user })
 );
 
-// router.get(
-//   '/scoreboard',
-//   userController.getScoreboard,
-//   (_req, res) => res.status(200).json(res.locals.scoreboard)
-// );
+router.get(
+  '/scoreboard',
+  userController.getScoreboard,
+  (_req, res) => res.status(200).json(res.locals.scoreboard)
+);
 
 
 export default router;

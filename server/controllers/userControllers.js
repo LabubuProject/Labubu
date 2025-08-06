@@ -91,6 +91,23 @@ userController.updateUserScore = async (req, res, next) => {
   }
 };
 // this below is for after the Dropdown Scoreboard layout is done
+
+userController.getScoreboard = async (_req, res, next) => {
+  try {
+    const users = await User.find({}, 'username bestTime highestLevel')
+    .sort({ highestLevel: -1, bestTime: 1});
+    res.locals.scoreboard = users;
+    return next();
+  } catch (err) {
+    return next ({
+      log: '❌ Error in userController.getScoreboard',
+      status: 500,
+      message: { err: '❌ Error occurred while fetching scoreboard' },
+    });
+  }
+};
+
+
 // userController.getScoreboard = async (req, res, next) => {
 //   try {
 //     const scoreboard = await User.find()
