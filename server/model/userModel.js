@@ -4,8 +4,8 @@ import bcrypt from 'bcryptjs';
 const userSchema = new Schema({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  bestTime: { type: String },
-  highestLevel: { type: Number },
+  bestTime: { type: String, default: null },
+  highestLevel: { type: Number, default: 0 },
 });
 
 const saltRounds = 5;
