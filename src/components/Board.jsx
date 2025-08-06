@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import Header from './Header';
 import { useAuth } from '../AuthContext/AuthContext';
+import Scoreboard from './Scoreboard';
+
 const Board = () => {
   const { user, logout } = useAuth();
   const [gridSize, setGridSize] = useState(6);
