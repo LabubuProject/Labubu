@@ -8,21 +8,25 @@ export default function Signup() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
-    try {
-      await signup(username, password);
-      navigate("/login",{replace: true}); 
-    } catch (err) {
-      alert("Signup failed", err);
-    }
+      const result = await signup(username, password);
+      if(!result.success) {
+        setErrorMsg(result.message);
+      } else {
+        navigate("/login",{replace: true});
+      }
   };
 
   return (
     <div className="min-h-screen flex flex-col space-y-6 items-center justify-center px-4">
       <Header flips={0} gameStarted={false} gameWon={false} />
       <div className="w-full max-w-md bg-white bg-opacity-80 backdrop-blur-sm p-8 rounded-lg shadow-lg">
+        {errorMsg && (
+          <p className="text-red-600 text-center mb-4 font-medium">{errorMsg}</p>
+        )}
         <form onSubmit={submit}>
           <h2 className="text-2xl font-semibold text-center text-ebony mb-6">
             Sign Up

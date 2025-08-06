@@ -28,14 +28,21 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const signup = async (username, password) => {
-    const { data } = await axios.post('/api/user/signup', {
-      username,
-      password,
-    });
-    setToken(data.token);
-    setUser(data.user);
-  };
-
+    try {
+      const { data } = await axios.post('/api/user/signup', {
+        username,
+        password,
+      });
+      setToken(data.token);
+      setUser(data.user);
+      return { success: true };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Signup failed. Try again',
+      }
+    }
+  }
   const login = async (username, password) => {
     const { data } = await axios.post('/api/user/login', {
       username,
@@ -62,3 +69,4 @@ export const AuthProvider = ({ children }) => {
 export function useAuth() {
   return useContext(AuthContext);
 }
+
