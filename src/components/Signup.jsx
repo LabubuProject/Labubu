@@ -12,11 +12,11 @@ export default function Signup() {
 
   const submit = async (e) => {
     e.preventDefault();
-      const result = await signup(username, password);
+      const result = await signup(username.trim(), password.trim());
       if(!result.success) {
-        setErrorMsg(result.message);
+        setErrorMsg(result.message || "☹️ Signup failed");
       } else {
-        navigate("/login",{replace: true});
+        navigate("/",{replace: true});
       }
   };
 

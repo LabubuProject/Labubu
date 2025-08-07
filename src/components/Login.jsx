@@ -15,7 +15,7 @@ export default function Login() {
       await login(username, password);
       navigate('/', { replace: true });
     } catch (err) {
-      alert(`${err}:Invalid username or password`);
+      alert(` ❌ ${err}: Invalid username or password`);
     }
   };
 

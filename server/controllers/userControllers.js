@@ -45,18 +45,30 @@ userController.updateUser = async (req, res, next) => {
 
 userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
+
+  console.log('🚀 login attempt');
+  console.log('👤 Username:', username);
+  console.log('🔑 Password:', password);
+
   try {
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      return res.status(401).json({ error: '❌ user not found' });
     }
+
+    console.log('⚙️ Hashed password in DB:', user.password);
+
     const isMatch = await user.comparePassword(password);
+    console.log('🔋 Passwords match:', isMatch);
+
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      return res.status(401).json({ error: '❌ Invalid password' });
     }
     res.locals.user = user;
     return next();
   } catch (err) {
+    console.error('🚩 Error in verifyUser:' , err);
+    
     return next(err);
   }
 };
