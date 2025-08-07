@@ -1,7 +1,11 @@
-import { Button, ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, ImageBackground, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Header from './components/Header';
 import { useEffect, useState } from 'react';
 import Card from './components/Card';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Entypo from '@expo/vector-icons/Entypo';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Scoreboard from './components/Scoreboard';
 
 export default function App() {
   const [gridSize, setGridSize] = useState(6);
@@ -15,6 +19,8 @@ export default function App() {
   const [paused, setPaused] = useState(false);
   const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
   const [reset, setReset] = useState(false);
+  const [musicPlaying, setMusicPlaying] = useState(false)
+  const [scoreBoardActive, setScoreBoardActive] = useState(false)
 
   // checking for matched cards and game completion
   useEffect(() => {
@@ -137,17 +143,52 @@ export default function App() {
       </Pressable>
     );
   }
+
+  // const scoreboardHandler = () => {
+  //   setScoreBoardActive(!scoreBoardActive)
+  // }
  
   return (
-    <ImageBackground style={styles.container} source={require('./assets/background.png')}>
+    <ImageBackground
+      style={styles.container}
+      source={require("./assets/background.png")}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "80%",
+          position: "absolute",
+          top: "10%",
+        }}
+      >
+        <TouchableOpacity onPress={() => setScoreBoardActive(true)}>
+          <MaterialIcons name="leaderboard" size={24} color="black" />
+        </TouchableOpacity>
+        {musicPlaying ? (
+          <TouchableOpacity onPress={() => setMusicPlaying(!musicPlaying)}>
+            <FontAwesome name="pause" size={24} color="black" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={() => setMusicPlaying(!musicPlaying)}>
+            <Entypo name="controller-play" size={32} color="black" />
+          </TouchableOpacity>
+        )}
+      </View>
+      <Scoreboard 
+        visible={scoreBoardActive} 
+        onClose={() => setScoreBoardActive(false)} 
+      />
       <Header
         flips={numOfFlips}
         gameWon={gameWon}
         gameStarted={gameStarted}
-        paused={paused}   
+        paused={paused}
       />
       {gameStarted && (
-        <View style={[styles.gridContainer, { width: dim * 96 + (dim - 1) * 16 }]}>
+        <View
+          style={[styles.gridContainer, { width: dim * 96 + (dim - 1) * 16 }]}
+        >
           {board.map((value, index) => (
             <Card
               key={index}
@@ -179,7 +220,7 @@ export default function App() {
           <Pressable
             style={({ pressed }) => [
               styles.button,
-              pressed && styles.buttonPressed
+              pressed && styles.buttonPressed,
             ]}
             onPress={startGame}
           >
@@ -197,6 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative'
   },
   menuContainer: {
     alignItems: 'center',
@@ -302,4 +344,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
   },
+  touchMenu: {
+    width: '80%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  }
 });
