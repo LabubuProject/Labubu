@@ -107,7 +107,7 @@ userController.updateUserScore = async (req, res, next) => {
 userController.getScoreboard = async (_req, res, next) => {
   try {
     const users = await User.find({}, 'username bestTime highestLevel')
-    .sort({ highestLevel: -1, bestTime: 1});
+    .sort({ highestLevel: -1, bestTime: 1 });
     res.locals.scoreboard = users;
     return next();
   } catch (err) {

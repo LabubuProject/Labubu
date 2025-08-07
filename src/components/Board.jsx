@@ -22,6 +22,8 @@ const Board = () => {
     { username: 'player1', bestTime: '45s', highestLevel: 6 },
     { username: 'player2', bestTime: '32s', highestLevel: 8 },
   ]);
+  // adding state to have scoreboard smoothly drop down after the game
+  const [showScoreboard, setShowScoreboard] = useState(false);
 
   /*  fetching the scoreboard data from the backend */
   useEffect(() => {
@@ -30,6 +32,7 @@ const Board = () => {
         const response = await fetch('/api/user/scoreboard');
         const data = await response.json();
         setUsers(data);
+        console.log('✅ All users from backend:', data);
       } catch (err) {
         console.error('❌ Error fetching scoreboard:', err);
       }
@@ -77,6 +80,15 @@ const Board = () => {
       setDim([]);
     }
   }, [reset]);
+
+  /* scroeboard drop down transition */
+  useEffect(() => {
+    if(gameWon) {
+      setTimeout(() => setShowScoreboard(true), 300);
+    } else {
+      setShowScoreboard(false);
+    }
+  }, [gameWon]);
 
   const startGame = (e) => {
     e.preventDefault();
@@ -159,8 +171,18 @@ const Board = () => {
   }
 
   return (
+    <>
+    {gameWon && (
+      <div 
+      className={`absolute top-0 left-0 w-full z-50 flex justify-center transition-transform duration-700 ease-out
+        ${ showScoreboard ? 'translate-y-0 opacity-100' : '-translate-y-40 opacity-0'
+        }`}
+        >
+        <Scoreboard users={users} currentUser={user?.username} />
+      </div>
+    )}
+
     <div className='min-h-screen flex flex-col items-center justify-center'>
-       { gameWon && <Scoreboard users={users} />}
       <Header
         flips={numOfFlips}
         gameWon={gameWon}
@@ -231,6 +253,7 @@ const Board = () => {
         </button>
       )}
     </div>
+    </>
   );
 };
 
