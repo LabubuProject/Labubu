@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import Header from './Header';
 import { useAuth } from '../AuthContext/AuthContext';
+import Scoreboard from './Scoreboard';
+import { useMusic } from './Music';
+
 const Board = () => {
   const { user, logout } = useAuth();
   const [gridSize, setGridSize] = useState(6);
@@ -15,6 +18,30 @@ const Board = () => {
   const [paused, setPaused] = useState(false);
   const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
   const [reset, setReset] = useState(false);
+  // placeholder for scoreboard data
+  const [users, setUsers] = useState([
+    { username: 'player1', bestTime: '45s', highestLevel: 6 },
+    { username: 'player2', bestTime: '32s', highestLevel: 8 },
+  ]);
+  // adding state to have scoreboard smoothly drop down after the game
+  const [showScoreboard, setShowScoreboard] = useState(false);
+  /*  adding a hook to play background music */
+  const { playMusic, pauseMusic } = useMusic();
+
+  /*  fetching the scoreboard data from the backend */
+  useEffect(() => {
+    const fetchScoreboard = async () => {
+      try {
+        const response = await fetch('/api/user/scoreboard');
+        const data = await response.json();
+        setUsers(data);
+        console.log('✅ All users from backend:', data);
+      } catch (err) {
+        console.error('❌ Error fetching scoreboard:', err);
+      }
+    };
+    fetchScoreboard();
+  }, []);
 
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
@@ -57,9 +84,19 @@ const Board = () => {
     }
   }, [reset]);
 
+  /* scroeboard drop down transition */
+  useEffect(() => {
+    if(gameWon) {
+      setTimeout(() => setShowScoreboard(true), 300);
+    } else {
+      setShowScoreboard(false);
+    }
+  }, [gameWon]);
+
   const startGame = (e) => {
     e.preventDefault();
     setGameStarted(true);
+    playMusic();
     const totalCards = gridSize * 2;
     const pairCount = Math.floor(totalCards / 2);
     const numbers = [...Array(pairCount).keys()].map((n) => n + 1);
@@ -107,6 +144,16 @@ const Board = () => {
     setReset(true);
   };
 
+  /*  handle toggle pause for music */
+  const togglePause = () => {
+    setPaused((p) => {
+      const next = !p;
+      if(next) pauseMusic();
+      else playMusic();
+      return next;
+    });
+  }
+
   let pauseButton;
   let resetButton;
   if (!gameWon && numOfFlips === 0) {
@@ -115,7 +162,7 @@ const Board = () => {
   } else {
     pauseButton = (
       <button
-        onClick={() => setPaused((p) => !p)}
+        onClick={togglePause}
         className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
           paused
             ? 'bg-[#A1D6D4] hover:bg-[#637A31]'
@@ -138,6 +185,17 @@ const Board = () => {
   }
 
   return (
+    <>
+    {gameWon && (
+      <div 
+      className={`absolute top-0 left-0 w-full z-50 flex justify-center transition-transform duration-700 ease-out
+        ${ showScoreboard ? 'translate-y-0 opacity-100' : '-translate-y-40 opacity-0'
+        }`}
+        >
+        <Scoreboard users={users} currentUser={user?.username} />
+      </div>
+    )}
+
     <div className='min-h-screen flex flex-col items-center justify-center'>
       <Header
         flips={numOfFlips}
@@ -209,6 +267,7 @@ const Board = () => {
         </button>
       )}
     </div>
+    </>
   );
 };
 

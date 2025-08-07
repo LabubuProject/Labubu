@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../AuthContext/AuthContext';
+import { useAuth } from '../AuthContext/AuthContext.jsx';
 import Header from './Header.jsx';
 
 export default function Login() {
-  const { login } = useContext(AuthContext);
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +15,7 @@ export default function Login() {
       await login(username, password);
       navigate('/', { replace: true });
     } catch (err) {
-      alert(`${err}:Invalid username or password`);
+      alert(` ❌ ${err}: Invalid username or password`);
     }
   };
 
