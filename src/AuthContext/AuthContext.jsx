@@ -44,12 +44,17 @@ export const AuthProvider = ({ children }) => {
     }
   }
   const login = async (username, password) => {
-    const { data } = await axios.post('/api/user/login', {
-      username,
-      password,
-    });
-    setToken(data.token);
-    setUser(data.user);
+    try {
+      const { data } = await axios.post('/api/user/login', {
+        username,
+        password,
+      });
+      setToken(data.token);
+      setUser(data.user);
+    } catch (err) {
+      console.error("Login failed:", err.response?.data || err.message);
+      throw err;
+    }
   };
 
   const logout = () => {
