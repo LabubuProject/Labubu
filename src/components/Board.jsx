@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import Header from './Header';
 import { useAuth } from '../AuthContext/AuthContext';
+import Scoreboard from './Scoreboard';
+
 const Board = () => {
   const { user, logout } = useAuth();
   const [gridSize, setGridSize] = useState(6);
@@ -15,6 +17,25 @@ const Board = () => {
   const [paused, setPaused] = useState(false);
   const imgArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
   const [reset, setReset] = useState(false);
+  // placeholder for scoreboard data
+  const [users, setUsers] = useState([
+    { username: 'player1', bestTime: '45s', highestLevel: 6 },
+    { username: 'player2', bestTime: '32s', highestLevel: 8 },
+  ]);
+
+  /*  fetching the scoreboard data from the backend */
+  useEffect(() => {
+    const fetchScoreboard = async () => {
+      try {
+        const response = await fetch('/api/user/scoreboard');
+        const data = await response.json();
+        setUsers(data);
+      } catch (err) {
+        console.error('❌ Error fetching scoreboard:', err);
+      }
+    };
+    fetchScoreboard();
+  }, []);
 
   /* checking for matched cards every time two cards are selected */
   useEffect(() => {
@@ -139,6 +160,7 @@ const Board = () => {
 
   return (
     <div className='min-h-screen flex flex-col items-center justify-center'>
+       { gameWon && <Scoreboard users={users} />}
       <Header
         flips={numOfFlips}
         gameWon={gameWon}
