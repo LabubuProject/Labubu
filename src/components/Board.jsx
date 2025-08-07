@@ -3,6 +3,7 @@ import Card from './Card';
 import Header from './Header';
 import { useAuth } from '../AuthContext/AuthContext';
 import Scoreboard from './Scoreboard';
+import { useMusic } from './Music';
 
 const Board = () => {
   const { user, logout } = useAuth();
@@ -24,6 +25,8 @@ const Board = () => {
   ]);
   // adding state to have scoreboard smoothly drop down after the game
   const [showScoreboard, setShowScoreboard] = useState(false);
+  /*  adding a hook to play background music */
+  const { playMusic, pauseMusic } = useMusic();
 
   /*  fetching the scoreboard data from the backend */
   useEffect(() => {
@@ -93,6 +96,7 @@ const Board = () => {
   const startGame = (e) => {
     e.preventDefault();
     setGameStarted(true);
+    playMusic();
     const totalCards = gridSize * 2;
     const pairCount = Math.floor(totalCards / 2);
     const numbers = [...Array(pairCount).keys()].map((n) => n + 1);
@@ -140,6 +144,16 @@ const Board = () => {
     setReset(true);
   };
 
+  /*  handle toggle pause for music */
+  const togglePause = () => {
+    setPaused((p) => {
+      const next = !p;
+      if(next) pauseMusic();
+      else playMusic();
+      return next;
+    });
+  }
+
   let pauseButton;
   let resetButton;
   if (!gameWon && numOfFlips === 0) {
@@ -148,7 +162,7 @@ const Board = () => {
   } else {
     pauseButton = (
       <button
-        onClick={() => setPaused((p) => !p)}
+        onClick={togglePause}
         className={`mt-4 px-4 py-2 text-white rounded-xl shadow ${
           paused
             ? 'bg-[#A1D6D4] hover:bg-[#637A31]'
