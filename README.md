@@ -1,4 +1,4 @@
-# Labubu
+# Labu Who
 
 ![labubu_iphone](./src/assets/iphone_mockup_sm.png)
 
